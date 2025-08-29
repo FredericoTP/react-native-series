@@ -4,7 +4,8 @@ import { Inter_500Medium, useFonts } from '@expo-google-fonts/inter';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Octicons from '@expo/vector-icons/Octicons';
 import { useContext, useState } from "react";
-import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import Animated, { LinearTransition } from 'react-native-reanimated';
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
@@ -72,11 +73,13 @@ export default function Index() {
           <Octicons name={colorScheme === 'dark' ? "moon" : "sun"} size={36} color={theme.text} selectable={undefined} style={{ width: 36 }} />
         </Pressable>
       </View>
-      <FlatList
+      <Animated.FlatList
         data={todos}
         renderItem={renderItem}
         keyExtractor={todo => todo.id}
         contentContainerStyle={{ flexGrow: 1 }}
+        itemLayoutAnimation={LinearTransition}
+        keyboardDismissMode='on-drag'
       />
 
     </SafeAreaView>
