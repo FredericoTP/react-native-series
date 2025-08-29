@@ -1,18 +1,27 @@
 import { data } from '@/data/todos';
+import { Inter_500Medium, useFonts } from '@expo-google-fonts/inter';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useState } from "react";
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
-  const [todos, setTodos] = useState(data.sort((a, b) => b.id - a.id));
-  const [text, setText] = useState('');
+  const [todos, setTodos] = useState(data.sort((a, b) => b.id - a.id))
+  const [text, setText] = useState('')
+
+  const [loaded, error] = useFonts({
+    Inter_500Medium,
+  })
+
+  if(!loaded && !error) {
+    return null
+  }
 
   const addTodo = () => {
     if (text.trim()) {
-      const newId = todos.lenght > 0 ? todos[0].id + 1 : 1;
-      setTodos([{ id: newId, title: text, completed: false }, ...todos]);
-      setText('');
+      const newId = todos.length > 0 ? todos[0].id + 1 : 1;
+      setTodos([{ id: newId, title: text, completed: false }, ...todos])
+      setText('')
     }
   }
 
@@ -29,7 +38,9 @@ export default function Index() {
       <Text
         style={[styles.todoText, item.completed && styles.completedText]}
         onPress={() => toggleTodo(item.id)}
-      >{item.title}</Text>
+      >
+        {item.title}
+      </Text>
       <Pressable onPress={() => removeTodo(item.id)}>
         <MaterialCommunityIcons name="delete-circle" size={36} color="red" selectable={undefined} />
       </Pressable>
@@ -38,28 +49,25 @@ export default function Index() {
 
   return (
     <SafeAreaView style={styles.container}>
-
       <View style={styles.inputContainer}>
-        <TextInput 
-          style={styles.input} 
-          placeholder="Add a new todo" 
-          placeholderTextColor='gray'
+        <TextInput
+          style={styles.input}
+          placeholder="Add a new todo"
+          placeholderTextColor="gray"
           value={text}
           onChangeText={setText}
         />
-
         <Pressable onPress={addTodo} style={styles.addButton}>
           <Text style={styles.addButtonText}>Add</Text>
         </Pressable>
       </View>
-
       <FlatList
         data={todos}
         renderItem={renderItem}
         keyExtractor={todo => todo.id}
         contentContainerStyle={{ flexGrow: 1 }}
       />
-      
+
     </SafeAreaView>
   );
 }
@@ -87,6 +95,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginRight: 10,
     fontSize: 18,
+    fontFamily: 'Inter_500Medium',
     minWidth: 0,
     color: 'white',
   },
@@ -115,6 +124,7 @@ const styles = StyleSheet.create({
   todoText: {
     flex: 1,
     fontSize: 18,
+    fontFamily: 'Inter_500Medium',
     color: 'white',
   },
   completedText: {
