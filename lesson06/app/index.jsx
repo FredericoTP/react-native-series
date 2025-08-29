@@ -4,6 +4,7 @@ import { Inter_500Medium, useFonts } from '@expo-google-fonts/inter';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Octicons from '@expo/vector-icons/Octicons';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StatusBar } from 'expo-status-bar';
 import { useContext, useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import Animated, { LinearTransition } from 'react-native-reanimated';
@@ -115,6 +116,7 @@ export default function Index() {
         keyboardDismissMode='on-drag'
       />
 
+      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
     </SafeAreaView>
   );
 }
